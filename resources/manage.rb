@@ -90,8 +90,8 @@ action :create do
       ssh_keys = []
       if u['ssh_keys']
         Array(u['ssh_keys']).each do |key|
-          if key.start_with?('https')
-            ssh_keys += keys_from_url(key)
+          if key.start_with?('https') || key.start_with?('INSECURE:http')
+            ssh_keys += keys_from_url(key.delete_prefix('INSECURE:'))
           else
             ssh_keys << key
           end
