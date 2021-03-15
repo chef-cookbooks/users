@@ -73,14 +73,14 @@ action :create do
       else
         gid user[:gid].to_i
       end
-      only_if { user[:gid] && user[:gid].is_a?(Numeric) && username_group }
+      only_if { user[:gid] && user[:gid].is_a?(Numeric) && username_group && !platform_family?('windows') }
     end
 
     # Create user object.
     # Do NOT try to manage null home directories.
     user username do
       uid user[:uid].to_i unless platform_family?('mac_os_x') || !user[:uid]
-      gid user[:gid].to_i if user[:gid]
+      gid user[:gid].to_i if user[:gid] && !platform_family?('windows')
       shell shell_is_valid?(user[:shell]) ? user[:shell] : '/bin/sh'
       comment user[:comment]
       password user[:password] if user[:password]

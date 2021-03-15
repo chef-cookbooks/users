@@ -24,6 +24,16 @@ platforms:
   - name: opensuse-leap-15
   - name: ubuntu-18.04
   - name: ubuntu-20.04
+  - name: windows-2019
+    driver:
+      gui: false
+      box: tas50/windows_2019
+      customize:
+        cpus: 2
+        memory: 4096
+    transport:
+      name: winrm
+      elevated: true
 
 suites:
   - name: default
